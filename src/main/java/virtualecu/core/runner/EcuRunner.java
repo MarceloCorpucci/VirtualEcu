@@ -3,6 +3,7 @@ package virtualecu.core.runner;
 import virtualecu.core.display.EcuDashboard;
 import virtualecu.core.input.CKP;
 import virtualecu.core.input.ECT;
+import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 
 public class EcuRunner {
@@ -13,6 +14,7 @@ public class EcuRunner {
 		CKP ckp = new CKP();
 		ECT ect = new ECT(isCelsius);
 		TPS tps = new TPS();
+		MAP map = new MAP();
 
 		EcuDashboard.showMessage(description);
 		
@@ -24,6 +26,9 @@ public class EcuRunner {
 		
 		ect.setTemperature(65.3f);
 		EcuDashboard.showMessage(ect.getName() + ": " + ect.getTemperature() + "º");
+		
+		map.setHg(2.5f);
+		EcuDashboard.showMessage(map.getName() + ": " + map.getHg() + "Hg");
 	}
 
 }
