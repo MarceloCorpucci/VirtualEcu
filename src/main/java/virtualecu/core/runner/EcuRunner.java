@@ -1,8 +1,8 @@
-package virtualecu.runner;
+package virtualecu.core.runner;
 
-import virtualecu.display.EcuDashboard;
-import virtualecu.input.ECT;
-import virtualecu.input.TPS;
+import virtualecu.core.display.EcuDashboard;
+import virtualecu.core.input.ECT;
+import virtualecu.core.input.TPS;
 
 public class EcuRunner {
 	public static void main (String[] args) {

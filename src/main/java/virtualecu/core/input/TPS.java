@@ -1,4 +1,4 @@
-package virtualecu.input;
+package virtualecu.core.input;
 
 public class TPS {
 	public int angle;
