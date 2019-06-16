@@ -9,24 +9,21 @@ public class EcuRunner {
 	public static void main (String[] args) {
 		final String description = "====== Virtual ECU runner ======";
 		
-		EcuDashboard dashboard = new EcuDashboard();
+		boolean isCelsius = true;
 		CKP ckp = new CKP();
+		ECT ect = new ECT(isCelsius);
 		TPS tps = new TPS();
-		ECT ect = new ECT();
 
-		System.out.println(description);
+		EcuDashboard.showMessage(description);
 		
-		dashboard.message = "Crankshaft Position Sensor: ";
-		ckp.voltage = 5.0f;
-		System.out.println(dashboard.message + ckp.voltage + "v");
+		ckp.setVoltage(5.0f);
+		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getVoltage() + "v");
+				
+		tps.setAngle(40);
+		EcuDashboard.showMessage(tps.getName() + ": " + tps.getAngle() + "º");
 		
-		dashboard.message = "throttle position: ";
-		tps.angle = 40;
-		System.out.println(dashboard.message + tps.angle + "º");
-		
-		ect.temperature = 65.3f;
-		dashboard.message = "engine temperature: ";
-		System.out.println("Engine temperature: " + ect.temperature + "º");
+		ect.setTemperature(65.3f);
+		EcuDashboard.showMessage(ect.getName() + ": " + ect.getTemperature() + "º");
 	}
 
 }

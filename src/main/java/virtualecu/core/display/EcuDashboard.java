@@ -1,5 +1,7 @@
 package virtualecu.core.display;
 
 public class EcuDashboard {
-	public String message;
+	public static void showMessage(String message) {
+		System.out.println(message);
+	}
 }
