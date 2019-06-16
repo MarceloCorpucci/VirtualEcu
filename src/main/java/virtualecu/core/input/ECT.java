@@ -1,4 +1,4 @@
-package virtualecu.input;
+package virtualecu.core.input;
 
 public class ECT {
 	public float temperature;
