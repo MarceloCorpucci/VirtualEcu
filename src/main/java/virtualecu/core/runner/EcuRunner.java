@@ -3,6 +3,7 @@ package virtualecu.core.runner;
 import virtualecu.core.display.EcuDashboard;
 import virtualecu.core.input.CKP;
 import virtualecu.core.input.ECT;
+import virtualecu.core.input.Lambda;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 import virtualecu.core.processor.EcuProcessor;
@@ -16,6 +17,7 @@ public class EcuRunner {
 		ECT ect = new ECT(isCelsius);
 		TPS tps = new TPS();
 		MAP map = new MAP();
+		Lambda lambda = new Lambda();
 		EcuProcessor processor = new EcuProcessor();
 
 		EcuDashboard.showMessage(description);
@@ -33,6 +35,10 @@ public class EcuRunner {
 		
 		map.setHg(2.5f);
 		EcuDashboard.showMessage(map.getName() + ": " + map.getHg() + "Hg");
+		
+		float airFuelRatio = 11.5f;
+		lambda.measureRatio(airFuelRatio);
+		EcuDashboard.showMessage(lambda.getName() + ": is receiving " + airFuelRatio + " air/fuel ratio - " + lambda.getState());
 	}
 
 }
