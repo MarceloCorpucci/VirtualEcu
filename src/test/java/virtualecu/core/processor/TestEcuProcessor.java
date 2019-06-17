@@ -86,6 +86,6 @@ public class TestEcuProcessor {
 		ecuProcessor.measureAirDensity(map, bs);
 		ecuProcessor.dosifyFuel(tps);
 		
-		assertThat(ecuProcessor.getInjectorState(), is("injecting fuel"));
+		assertThat(ecuProcessor.getInjectorState(), is("injecting fuel, normal mode"));
 	}
 }

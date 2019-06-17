@@ -20,7 +20,7 @@ public class TestFuelInjector {
 	public void testInjectNormalState() {
 		injector.interruptVoltage();
 		injector.inject(2.4f);
-        assertThat(injector.getState(), is("injecting fuel"));	
+        assertThat(injector.getState(), is("injecting fuel, normal mode"));	
 	}
 	
 	@Test

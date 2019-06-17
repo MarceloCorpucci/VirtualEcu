@@ -15,9 +15,14 @@ public class FuelInjector {
 	
 	public void inject(float pressure) {
 		if (voltageOn == false) {
-			if (pressure <= 2.5f) {
-				state = "injecting fuel";
-			} else {
+			switch(Math.round(pressure)) {
+			case 1:
+				state = "injecting fuel, efficiency mode";
+				break;
+			case 2:
+				state = "injecting fuel, normal mode";
+				break;
+			case 3: 
 				state = "injecting fuel, full capacity";
 			}
 		}

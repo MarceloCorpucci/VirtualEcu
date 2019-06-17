@@ -4,6 +4,7 @@ import virtualecu.core.input.BS;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 import virtualecu.core.output.FuelInjector;
+import virtualecu.core.processor.instruction.FuelDosis;
 
 public class EcuProcessor {
 	private boolean voltageOn = true;		
@@ -34,23 +35,23 @@ public class EcuProcessor {
 		switch(airDensity) {
 		case "low":
 			if (tps.getAngle() >= 50) {
-				injectFuel(1.8f);
+				injectFuel(FuelDosis.STAGE_O);
 			} else {
-				injectFuel(1.9f);
+				injectFuel(FuelDosis.STAGE_O + 0.3f);
 			}
 			break;
 		case "normal":
 			if (tps.getAngle() >= 50) {
-				injectFuel(2.4f);
+				injectFuel(FuelDosis.STAGE_1);
 			} else {
-				injectFuel(2.8f);
+				injectFuel(FuelDosis.STAGE_1 + 0.4f);
 			}
 			break;
 		case "high":
 			if (tps.getAngle() >= 50) {
-				injectFuel(3.1f);
+				injectFuel(FuelDosis.STAGE_2);
 			} else {
-				injectFuel(3.3f);
+				injectFuel(FuelDosis.STAGE_3);
 			}
 		default:
 			//todo set injector closed.
