@@ -5,6 +5,7 @@ import virtualecu.core.input.CKP;
 import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
+import virtualecu.core.processor.EcuProcessor;
 
 public class EcuRunner {
 	public static void main (String[] args) {
@@ -15,6 +16,7 @@ public class EcuRunner {
 		ECT ect = new ECT(isCelsius);
 		TPS tps = new TPS();
 		MAP map = new MAP();
+		EcuProcessor processor = new EcuProcessor();
 
 		EcuDashboard.showMessage(description);
 		
@@ -22,7 +24,9 @@ public class EcuRunner {
 		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getVoltage() + "v");
 				
 		tps.setAngle(40);
+		processor.dosifyFuel(tps);
 		EcuDashboard.showMessage(tps.getName() + ": " + tps.getAngle() + "º");
+		EcuDashboard.showMessage(processor.getInjectorState());
 		
 		ect.setTemperature(65.3f);
 		EcuDashboard.showMessage(ect.getName() + ": " + ect.getTemperature() + "º");
