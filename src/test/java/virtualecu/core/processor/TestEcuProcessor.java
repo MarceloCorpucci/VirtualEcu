@@ -30,25 +30,27 @@ public class TestEcuProcessor {
 
 	@Test
 	public void testCheckCoolantTemperature() {
-		ect.setTemperature(20.3f);
-		ecuProcessor.setEct(ect);
-		String message = ecuProcessor.checkCoolantTemperature();
+		//1.- set ect with 20.3f
+		//2.- set EcuProcessor ect
+		//3.- exercise checkCoolantTemperature() method!
 		
-		assertThat(message, is(equalTo("Checking coolant temp, reaching minimum threshold in 46 secs")));
+		//4.- assert that message is equal to "Checking coolant temp, reaching minimum threshold in 46 secs"
+		assertThat(true, is(equalTo(false)));
 	}
 	
 	@Test
 	public void testCheckCoolantTemperatureMax() {
-		map.setHg(2.7f);
-		bs.setHg(2.4f);
-		tps.setAngle(40);
-		ect.setTemperature(20.3f);
-		ecuProcessor.setEct(ect);
-		ecuProcessor.measureAirDensity(map, bs);
-		ecuProcessor.dosifyFuel(tps);
-		String message = ecuProcessor.checkCoolantTemperature();
+		//1.- set map to (2.7f);
+		//2.- set bs to(2.4f);
+		//3.- set tps to (40);
+		//4.- set ect to (20.3f);
+		//5.- set ecuProcessor ect attribute;
+		//6.- invoke ecuProcessor.measureAirDensity(map, bs);
+		//7.- invoke ecuProcessor.dosifyFuel(tps);
+		//8.- exercise checkCoolantTemperature() method!
 		
-		assertThat(message, is(equalTo("Checking coolant temp, reaching max threshold in 15 secs")));
+		//4.- assert that message is equal to "Checking coolant temp, reaching max threshold in 15 secs"
+		assertThat(true, is(equalTo(false)));
 	}
 	
 	@Test

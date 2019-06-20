@@ -29,19 +29,21 @@ public class EcuProcessor {
 		
 		if(ect.getTemperature() < TemperatureThreshold.MIN_CELSIUS) {
 			
-			for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
-				times += 1;
-			}
+			//For code here!
 			
 			if(indexFromEct + times == Math.round(TemperatureThreshold.MIN_CELSIUS) + 1) message = "Checking coolant temp, reaching minimum threshold in " + times + " secs";
 			
 		} else {
-			for(int i = indexFromEct; i < TemperatureThreshold.MAX_CELSIUS; i++) {
-				times += 1;
-			}	
+	
+			//For code here!
 			
 			if(indexFromEct + times == Math.round(TemperatureThreshold.MAX_CELSIUS) + 1) message = "Checking coolant temp, reaching max threshold in " + times + " secs";
 		}
+
+		for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
+			times += 1;
+		}
+		
 		return message;
 	}
 	
