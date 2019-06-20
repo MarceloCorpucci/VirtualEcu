@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import virtualecu.core.input.BS;
+import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 
@@ -15,6 +16,7 @@ public class TestEcuProcessor {
 	private TPS tps;
 	private MAP map;
 	private BS bs;
+	private ECT ect;
 	private EcuProcessor ecuProcessor;
 	
 	@Before
@@ -22,7 +24,16 @@ public class TestEcuProcessor {
 		tps = new TPS();
 		map = new MAP();
 		bs = new BS();
+		ect = new ECT(true);
 		ecuProcessor = new EcuProcessor();
+	}
+
+	@Test
+	public void testCheckCoolantTemperature() {
+		ect.setTemperature(20.3f);
+		String message = ecuProcessor.checkCoolantTemperature(ect);
+		
+		assertThat(message, is(equalTo("Checking coolant temp, reaching minimum threshold in 46 secs")));
 	}
 	
 	@Test

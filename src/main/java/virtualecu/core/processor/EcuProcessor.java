@@ -1,15 +1,29 @@
 package virtualecu.core.processor;
 
 import virtualecu.core.input.BS;
+import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 import virtualecu.core.output.FuelInjector;
 import virtualecu.core.processor.instruction.FuelDosis;
+import virtualecu.core.processor.instruction.TemperatureThreshold;
 
 public class EcuProcessor {
 	private boolean voltageOn = true;		
 	private FuelInjector injector = new FuelInjector(voltageOn);
 	private String airDensity;
+	
+	public String checkCoolantTemperature(ECT ect) {
+		int indexFromEct = Math.round(ect.getTemperature());
+		int times = 0;
+		
+		for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
+			times += 1;
+		}
+		
+		return "Checking coolant temp, reaching minimum threshold in " + times + " secs";
+		
+	}
 	
 	public String measureAirDensity(MAP map, BS bs) {
 		int airDensityDiff = Math.round(map.getHg() - bs.getHg());
