@@ -33,15 +33,17 @@ public class EcuRunner {
 		bs.setHg(2.4f);
 		EcuDashboard.showMessage(bs.getName() + ": " + bs.getHg() + "Hg");
 		
+		ect.setTemperature(25.3f);
+		processor.setEct(ect);
+		EcuDashboard.showMessage(ect.getName() + ": " + ect.getTemperature() + "º");
+
 		tps.setAngle(40);
 		String airDensity = processor.measureAirDensity(map, bs);
 		EcuDashboard.showMessage("Air Density Level: " + airDensity);
 		processor.dosifyFuel(tps);
 		EcuDashboard.showMessage(tps.getName() + ": " + tps.getAngle() + "º");
 		EcuDashboard.showMessage(processor.getInjectorState());
-		
-		ect.setTemperature(65.3f);
-		EcuDashboard.showMessage(ect.getName() + ": " + ect.getTemperature() + "º");
+		EcuDashboard.showMessage(processor.checkCoolantTemperature());
 		
 		float airFuelRatio = 11.5f;
 		lambda.measureRatio(airFuelRatio);

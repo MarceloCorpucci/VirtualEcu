@@ -31,9 +31,24 @@ public class TestEcuProcessor {
 	@Test
 	public void testCheckCoolantTemperature() {
 		ect.setTemperature(20.3f);
-		String message = ecuProcessor.checkCoolantTemperature(ect);
+		ecuProcessor.setEct(ect);
+		String message = ecuProcessor.checkCoolantTemperature();
 		
 		assertThat(message, is(equalTo("Checking coolant temp, reaching minimum threshold in 46 secs")));
+	}
+	
+	@Test
+	public void testCheckCoolantTemperatureMax() {
+		map.setHg(2.7f);
+		bs.setHg(2.4f);
+		tps.setAngle(40);
+		ect.setTemperature(20.3f);
+		ecuProcessor.setEct(ect);
+		ecuProcessor.measureAirDensity(map, bs);
+		ecuProcessor.dosifyFuel(tps);
+		String message = ecuProcessor.checkCoolantTemperature();
+		
+		assertThat(message, is(equalTo("Checking coolant temp, reaching max threshold in 15 secs")));
 	}
 	
 	@Test
@@ -82,6 +97,7 @@ public class TestEcuProcessor {
 		map.setHg(7.7f);
 		bs.setHg(3.8f);
 		
+		ecuProcessor.setEct(ect);
 		ecuProcessor.measureAirDensity(map, bs);
 		ecuProcessor.dosifyFuel(tps);
 		
@@ -94,6 +110,7 @@ public class TestEcuProcessor {
 		map.setHg(2.7f);
 		bs.setHg(2.1f);
 		
+		ecuProcessor.setEct(ect);
 		ecuProcessor.measureAirDensity(map, bs);
 		ecuProcessor.dosifyFuel(tps);
 		

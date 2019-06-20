@@ -12,17 +12,37 @@ public class EcuProcessor {
 	private boolean voltageOn = true;		
 	private FuelInjector injector = new FuelInjector(voltageOn);
 	private String airDensity;
+	private ECT ect;
 	
-	public String checkCoolantTemperature(ECT ect) {
+	public ECT getEct() {
+		return ect;
+	}
+
+	public void setEct(ECT ect) {
+		this.ect = ect;
+	}
+	
+	public String checkCoolantTemperature() {
+		String message =  "";
 		int indexFromEct = Math.round(ect.getTemperature());
 		int times = 0;
 		
-		for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
-			times += 1;
+		if(ect.getTemperature() < TemperatureThreshold.MIN_CELSIUS) {
+			
+			for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
+				times += 1;
+			}
+			
+			if(indexFromEct + times == Math.round(TemperatureThreshold.MIN_CELSIUS) + 1) message = "Checking coolant temp, reaching minimum threshold in " + times + " secs";
+			
+		} else {
+			for(int i = indexFromEct; i < TemperatureThreshold.MAX_CELSIUS; i++) {
+				times += 1;
+			}	
+			
+			if(indexFromEct + times == Math.round(TemperatureThreshold.MAX_CELSIUS) + 1) message = "Checking coolant temp, reaching max threshold in " + times + " secs";
 		}
-		
-		return "Checking coolant temp, reaching minimum threshold in " + times + " secs";
-		
+		return message;
 	}
 	
 	public String measureAirDensity(MAP map, BS bs) {
@@ -79,5 +99,9 @@ public class EcuProcessor {
 	private void injectFuel(float fuelDosis) {
 		injector.interruptVoltage();
 		injector.inject(fuelDosis);
+		
+		float coolantTemp = ect.getTemperature();
+		if(fuelDosis >= FuelDosis.STAGE_O && fuelDosis <= FuelDosis.STAGE_1) ect.setTemperature(coolantTemp + 50.2f);
+		if(fuelDosis >= FuelDosis.STAGE_2 && fuelDosis <= FuelDosis.STAGE_3) ect.setTemperature(coolantTemp + 55.6f);
 	}
 }
