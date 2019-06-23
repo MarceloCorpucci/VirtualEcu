@@ -58,11 +58,9 @@ public class EcuProcessor {
 	public int showRpm() {
 		int[] range = ckp.getInterrupterRingSpecs();
 		float multiplier = ckp.getVoltage();
-		for(float volt : range) {
-			if (volt == 1) {
-				multiplier *= 2.02;
-			}
-		}
+		
+		//your code goes here!
+		
 		return Math.round(multiplier);
 	}
 	
