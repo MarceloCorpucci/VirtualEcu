@@ -2,10 +2,12 @@ package virtualecu.core.input;
 
 public class CKP {
 	private String name;
-	public float voltage;
+	private float voltage;
+	private int[] interrupterRing = {1, 1, 1, 1, 1, 0, 1, 1, 1, 1};
 	
 	public CKP() {
 		name = "Crankshaft Position Sensor";
+		voltage = 0;
 	}
 
 	public String getName() {
@@ -13,10 +15,19 @@ public class CKP {
 	}
 
 	public float getVoltage() {
-		return voltage;
+		return Math.round(voltage * 100.0) / 100.0f;
 	}
 
-	public void setVoltage(float voltage) {
-		this.voltage = voltage;
+	public int[] getInterrupterRingSpecs() {
+		return interrupterRing;
 	}
+	
+	public void setVoltage() {
+		for (int slot : interrupterRing) {
+			if (slot != 0) {
+				voltage += 0.15f;
+			}
+		}
+	}
+	
 }

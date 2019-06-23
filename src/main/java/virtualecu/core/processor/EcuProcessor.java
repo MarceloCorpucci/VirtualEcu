@@ -1,6 +1,7 @@
 package virtualecu.core.processor;
 
 import virtualecu.core.input.BS;
+import virtualecu.core.input.CKP;
 import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
@@ -13,6 +14,7 @@ public class EcuProcessor {
 	private FuelInjector injector = new FuelInjector(voltageOn);
 	private String airDensity;
 	private ECT ect;
+	private CKP ckp;
 	
 	public ECT getEct() {
 		return ect;
@@ -20,6 +22,14 @@ public class EcuProcessor {
 
 	public void setEct(ECT ect) {
 		this.ect = ect;
+	}
+	
+	public CKP getCkp() {
+		return ckp;
+	}
+
+	public void setCkp(CKP ckp) {
+		this.ckp = ckp;
 	}
 	
 	public String checkCoolantTemperature() {
@@ -43,6 +53,17 @@ public class EcuProcessor {
 			if(indexFromEct + times == Math.round(TemperatureThreshold.MAX_CELSIUS) + 1) message = "Checking coolant temp, reaching max threshold in " + times + " secs";
 		}
 		return message;
+	}
+	
+	public int showRpm() {
+		int[] range = ckp.getInterrupterRingSpecs();
+		float multiplier = ckp.getVoltage();
+		for(float volt : range) {
+			if (volt == 1) {
+				multiplier *= 2.02;
+			}
+		}
+		return Math.round(multiplier);
 	}
 	
 	public String measureAirDensity(MAP map, BS bs) {

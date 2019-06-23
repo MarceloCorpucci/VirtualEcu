@@ -24,8 +24,9 @@ public class EcuRunner {
 
 		EcuDashboard.showMessage(description);
 		
-		ckp.setVoltage(5.0f);
-		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getVoltage() + "v");
+		ckp.setVoltage();
+		processor.setCkp(ckp);
+		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getVoltage() + "v " + "@ " + Integer.toString(processor.showRpm()) + "rpm.");
 				
 		map.setHg(2.7f);
 		EcuDashboard.showMessage(map.getName() + ": " + map.getHg() + "Hg");
