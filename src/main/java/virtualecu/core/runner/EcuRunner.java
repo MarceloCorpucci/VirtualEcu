@@ -44,6 +44,7 @@ public class EcuRunner {
 		processor.dosifyFuel(tps);
 		EcuDashboard.showMessage(tps.getName() + ": " + tps.getAngle() + "º");
 		EcuDashboard.showMessage(processor.getInjectorState());
+		EcuDashboard.showMessage(processor.getIgnitionState());
 		EcuDashboard.showMessage(processor.checkCoolantTemperature());
 		
 		float airFuelRatio = 11.5f;

@@ -6,12 +6,14 @@ import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 import virtualecu.core.output.FuelInjector;
+import virtualecu.core.output.IgnitionControlModule;
 import virtualecu.core.processor.instruction.FuelDosis;
 import virtualecu.core.processor.instruction.TemperatureThreshold;
 
 public class EcuProcessor {
 	private boolean voltageOn = true;		
 	private FuelInjector injector = new FuelInjector(voltageOn);
+	private IgnitionControlModule ignitionModule = new IgnitionControlModule();
 	private String airDensity;
 	private ECT ect;
 	private CKP ckp;
@@ -117,9 +119,21 @@ public class EcuProcessor {
 		return injector.getState();
 	}
 	
+	public String getIgnitionState() {
+		return ignitionModule.getIgnitionCoilState();
+	}
+	
 	private void injectFuel(float fuelDosis) {
 		injector.interruptVoltage();
 		injector.inject(fuelDosis);
+		
+		int pulse = 1;
+		int i = 1;
+		int[] range = ckp.getInterrupterRingSpecs();
+		while (pulse == range[i]) {
+			ignitionModule.ignite();
+			i++;
+		}
 		
 		float coolantTemp = ect.getTemperature();
 		if(fuelDosis >= FuelDosis.STAGE_O && fuelDosis <= FuelDosis.STAGE_1) ect.setTemperature(coolantTemp + 50.2f);
