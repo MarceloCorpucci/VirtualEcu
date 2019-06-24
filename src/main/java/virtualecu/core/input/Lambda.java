@@ -20,7 +20,7 @@ public class Lambda {
 	}
 	
 	public void measureRatio(float airFuelRatio) {
-		heatSensor();
+		// Invoke heatSensor() here!
 
 		if (airFuelRatio <= 14.5f) {
 			measurementResult = "Rich Mixture";
@@ -29,11 +29,6 @@ public class Lambda {
 		}
 	}
 	
-	public void heatSensor() {
-		temperatureState = "";
-		while(seconds < 30) {
-			temperatureState = "Heating sensor. ";
-			seconds++;
-		}
-	}
+	//Create heatSensor() here!
+
 }
