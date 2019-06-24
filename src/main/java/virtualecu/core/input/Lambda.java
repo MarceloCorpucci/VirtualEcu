@@ -2,10 +2,13 @@ package virtualecu.core.input;
 
 public class Lambda {
 	private String name;
-	private String state;
+	private String measurementResult;
+	private String temperatureState;
+	int seconds;
 	
 	public Lambda() {
 		name = "Wide Band Oxygen Sensor";
+		seconds = 0;
 	}
 	
 	public String getName() {
@@ -13,14 +16,24 @@ public class Lambda {
 	}
 	
 	public String getState() {
-		return state;
+		return temperatureState + measurementResult;
 	}
 	
 	public void measureRatio(float airFuelRatio) {
+		heatSensor();
+
 		if (airFuelRatio <= 14.5f) {
-			state = "Rich Mixture";
+			measurementResult = "Rich Mixture";
 		} else {
-			state = "Lean Mixture";
+			measurementResult = "Lean Mixture";
+		}
+	}
+	
+	public void heatSensor() {
+		temperatureState = "";
+		while(seconds < 30) {
+			temperatureState = "Heating sensor. ";
+			seconds++;
 		}
 	}
 }

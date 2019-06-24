@@ -15,13 +15,27 @@ public class TestLambda {
 	}
 	
 	@Test
-	public void testMeasureRatioSetsRichMixture() {
+	public void testMeasureRatioSetsRichMixtureWithoutHeating() {
+		lambda.measureRatio(11.5f);
+        assertThat(lambda.getState(), is("Heating sensor. Rich Mixture"));	
+	}
+	
+	@Test
+	public void testMeasureRatioSetsLeanMixtureWithoutHeating() {
+		lambda.measureRatio(15.5f);
+        assertThat(lambda.getState(), is("Heating sensor. Lean Mixture"));	
+	}
+	
+	@Test
+	public void testMeasureRatioSetsRichMixtureWithHeating() {
+		lambda.measureRatio(11.5f);
 		lambda.measureRatio(11.5f);
         assertThat(lambda.getState(), is("Rich Mixture"));	
 	}
 	
 	@Test
-	public void testMeasureRatioSetsLeanMixture() {
+	public void testMeasureRatioSetsLeanMixtureHeating() {
+		lambda.measureRatio(15.5f);
 		lambda.measureRatio(15.5f);
         assertThat(lambda.getState(), is("Lean Mixture"));	
 	}

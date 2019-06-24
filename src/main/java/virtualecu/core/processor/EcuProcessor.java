@@ -6,11 +6,13 @@ import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
 import virtualecu.core.output.FuelInjector;
+import virtualecu.core.output.FuelPump;
 import virtualecu.core.output.IgnitionControlModule;
 import virtualecu.core.processor.instruction.FuelDosis;
 import virtualecu.core.processor.instruction.TemperatureThreshold;
 
 public class EcuProcessor {
+	private FuelPump fuelPump = new FuelPump();
 	private boolean voltageOn = true;		
 	private FuelInjector injector = new FuelInjector(voltageOn);
 	private IgnitionControlModule ignitionModule = new IgnitionControlModule();
@@ -32,6 +34,14 @@ public class EcuProcessor {
 
 	public void setCkp(CKP ckp) {
 		this.ckp = ckp;
+	}
+	
+	public void activateFuelPump() {
+		fuelPump.activate();
+	}
+	
+	public String getFuelPumpState() {
+		return fuelPump.getFuelPumpState();
 	}
 	
 	public String checkCoolantTemperature() {

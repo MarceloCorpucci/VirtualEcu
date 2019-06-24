@@ -19,10 +19,14 @@ public class EcuRunner {
 		TPS tps = new TPS();
 		MAP map = new MAP();
 		BS bs = new BS();
+
 		Lambda lambda = new Lambda();
 		EcuProcessor processor = new EcuProcessor();
 
 		EcuDashboard.showMessage(description);
+		
+		processor.activateFuelPump();
+		EcuDashboard.showMessage(processor.getFuelPumpState());
 		
 		ckp.setVoltage();
 		processor.setCkp(ckp);
