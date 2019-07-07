@@ -1,24 +1,41 @@
 package virtualecu.core.processor;
 
-import virtualecu.core.input.BS;
 import virtualecu.core.input.CKP;
 import virtualecu.core.input.ECT;
-import virtualecu.core.input.MAP;
-import virtualecu.core.input.TPS;
 import virtualecu.core.output.FuelInjector;
 import virtualecu.core.output.FuelPump;
 import virtualecu.core.output.IgnitionControlModule;
-import virtualecu.core.processor.instruction.FuelDosis;
-import virtualecu.core.processor.instruction.TemperatureThreshold;
 
 public class EcuProcessor {
-	private FuelPump fuelPump = new FuelPump();
-	private boolean voltageOn = true;		
-	private FuelInjector injector = new FuelInjector(voltageOn);
-	private IgnitionControlModule ignitionModule = new IgnitionControlModule();
-	private String airDensity;
-	private ECT ect;
-	private CKP ckp;
+	protected FuelPump fuelPump;
+	protected FuelInjector injector;
+	protected IgnitionControlModule ignitionModule;
+	protected ECT ect;
+	protected CKP ckp;
+
+	public FuelPump getFuelPump() {
+		return fuelPump;
+	}
+
+	public void setFuelPump(FuelPump fuelPump) {
+		this.fuelPump = fuelPump;
+	}
+
+	public FuelInjector getInjector() {
+		return injector;
+	}
+
+	public void setInjector(FuelInjector injector) {
+		this.injector = injector;
+	}
+
+	public IgnitionControlModule getIgnitionModule() {
+		return ignitionModule;
+	}
+
+	public void setIgnitionModule(IgnitionControlModule ignitionModule) {
+		this.ignitionModule = ignitionModule;
+	}
 	
 	public ECT getEct() {
 		return ect;
@@ -35,118 +52,5 @@ public class EcuProcessor {
 	public void setCkp(CKP ckp) {
 		this.ckp = ckp;
 	}
-	
-	public void activateFuelPump() {
-		fuelPump.activate();
-	}
-	
-	public String getFuelPumpState() {
-		return fuelPump.getFuelPumpState();
-	}
-	
-	public String checkCoolantTemperature() {
-		String message =  "";
-		int indexFromEct = Math.round(ect.getTemperature());
-		int times = 0;
-		
-		if(ect.getTemperature() < TemperatureThreshold.MIN_CELSIUS) {
-			
-			for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
-				times += 1;
-			}
-			
-			if(indexFromEct + times == Math.round(TemperatureThreshold.MIN_CELSIUS) + 1) message = "Checking coolant temp, reaching minimum threshold in " + times + " secs";
-			
-		} else {
-			for(int i = indexFromEct; i < TemperatureThreshold.MAX_CELSIUS; i++) {
-				times += 1;
-			}	
-			
-			if(indexFromEct + times == Math.round(TemperatureThreshold.MAX_CELSIUS) + 1) message = "Checking coolant temp, reaching max threshold in " + times + " secs";
-		}
-		return message;
-	}
-	
-	public int showRpm() {
-		int[] range = ckp.getInterrupterRingSpecs();
-		float multiplier = ckp.getVoltage();
-		for(float volt : range) {
-			if (volt == 1) {
-				multiplier *= 2.02;
-			}
-		}
-		return Math.round(multiplier);
-	}
-	
-	public String measureAirDensity(MAP map, BS bs) {
-		int airDensityDiff = Math.round(map.getHg() - bs.getHg());
-		
-		switch (airDensityDiff) {
-		case 0: case 1:
-			airDensity = "low";
-			break;
-		case 2: case 3:
-			airDensity = "normal";
-			break;
-		case 4:
-			airDensity = "high";
-			break;
-		default:
-			airDensity = "failed";
-		}
-		
-		return airDensity;
-	}
-	
-	public void dosifyFuel(TPS tps) {
-		switch(airDensity) {
-		case "low":
-			if (tps.getAngle() >= 50) {
-				injectFuel(FuelDosis.STAGE_O);
-			} else {
-				injectFuel(FuelDosis.STAGE_O + 0.3f);
-			}
-			break;
-		case "normal":
-			if (tps.getAngle() >= 50) {
-				injectFuel(FuelDosis.STAGE_1);
-			} else {
-				injectFuel(FuelDosis.STAGE_1 + 0.4f);
-			}
-			break;
-		case "high":
-			if (tps.getAngle() >= 50) {
-				injectFuel(FuelDosis.STAGE_2);
-			} else {
-				injectFuel(FuelDosis.STAGE_3);
-			}
-		default:
-			//todo set injector closed.
-		}
-	}
-	
-	public String getInjectorState() {
-		return injector.getState();
-	}
-	
-	public String getIgnitionState() {
-		return ignitionModule.getIgnitionCoilState();
-	}
-	
-	private void injectFuel(float fuelDosis) {
-		injector.interruptVoltage();
-		injector.inject(fuelDosis);
-		
-		int pulse = 1;
-		int i = 1;
-		int[] range = ckp.getInterrupterRingSpecs();
-		while (pulse == range[i]) {
-			ignitionModule.ignite();
-			i++;
-		}
-		
-		float coolantTemp = ect.getTemperature();
-		if(fuelDosis >= FuelDosis.STAGE_O && fuelDosis <= FuelDosis.STAGE_1) ect.setTemperature(coolantTemp + 50.2f);
-		if(fuelDosis >= FuelDosis.STAGE_2 && fuelDosis <= FuelDosis.STAGE_3) ect.setTemperature(coolantTemp + 55.6f);
-	}
+
 }
