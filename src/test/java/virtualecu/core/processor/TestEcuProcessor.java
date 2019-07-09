@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import virtualecu.core.input.BS;
+import virtualecu.core.input.CKP;
 import virtualecu.core.input.ECT;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
@@ -17,6 +18,7 @@ public class TestEcuProcessor {
 	private MAP map;
 	private BS bs;
 	private ECT ect;
+	private CKP ckp;
 	private EcuProcessor ecuProcessor;
 	
 	@Before
@@ -25,6 +27,7 @@ public class TestEcuProcessor {
 		map = new MAP();
 		bs = new BS();
 		ect = new ECT(true);
+		ckp = new CKP();
 		ecuProcessor = new EcuProcessor();
 	}
 
@@ -43,6 +46,7 @@ public class TestEcuProcessor {
 		bs.setHg(2.4f);
 		tps.setAngle(40);
 		ect.setTemperature(20.3f);
+		ecuProcessor.setCkp(ckp);
 		ecuProcessor.setEct(ect);
 		ecuProcessor.measureAirDensity(map, bs);
 		ecuProcessor.dosifyFuel(tps);
@@ -97,6 +101,7 @@ public class TestEcuProcessor {
 		map.setHg(7.7f);
 		bs.setHg(3.8f);
 		
+		ecuProcessor.setCkp(ckp);
 		ecuProcessor.setEct(ect);
 		ecuProcessor.measureAirDensity(map, bs);
 		ecuProcessor.dosifyFuel(tps);
@@ -110,6 +115,7 @@ public class TestEcuProcessor {
 		map.setHg(2.7f);
 		bs.setHg(2.1f);
 		
+		ecuProcessor.setCkp(ckp);
 		ecuProcessor.setEct(ect);
 		ecuProcessor.measureAirDensity(map, bs);
 		ecuProcessor.dosifyFuel(tps);
