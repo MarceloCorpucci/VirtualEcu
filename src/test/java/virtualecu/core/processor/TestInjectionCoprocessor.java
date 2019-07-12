@@ -34,7 +34,7 @@ public class TestInjectionCoprocessor {
 
 		fuelInjector = new FuelInjector(true);
 		ckp = new CKP();
-		ckp.setVoltage();
+		ckp.setUnitValue();
 		ignitionModule = new IgnitionControlModule();
 		ect = new ECT(true);
 		injectionCoprocessor = new InjectionCoprocessor();
@@ -48,9 +48,9 @@ public class TestInjectionCoprocessor {
 	
 	@Test
 	public void testDosifyFuelAtFullCapacity() {
-		tps.setAngle(40);
-		map.setHg(6.7f);
-		bs.setHg(2.4f);
+		tps.setUnitValue(40);
+		map.setUnitValue(6.7f);
+		bs.setUnitValue(2.4f);
 		
 		String airDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		injectionCoprocessor.dosifyFuel(tps, airDensity);
@@ -60,9 +60,9 @@ public class TestInjectionCoprocessor {
 	
 	@Test
 	public void testDosifyFuelAtNormalCapacity() {
-		tps.setAngle(60);
-		map.setHg(2.7f);
-		bs.setHg(2.1f);
+		tps.setUnitValue(60);
+		map.setUnitValue(2.7f);
+		bs.setUnitValue(2.1f);
 		
 		String airDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		injectionCoprocessor.dosifyFuel(tps, airDensity);

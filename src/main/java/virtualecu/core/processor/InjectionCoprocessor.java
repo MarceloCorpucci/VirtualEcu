@@ -16,21 +16,21 @@ public class InjectionCoprocessor extends EcuProcessor {
 	public void dosifyFuel(TPS tps, String airDensity) {
 		switch(airDensity) {
 		case "low":
-			if (tps.getAngle() >= 50) {
+			if (tps.getUnitValue() >= 50) {
 				injectFuel(FuelDosis.STAGE_O);
 			} else {
 				injectFuel(FuelDosis.STAGE_O + 0.3f);
 			}
 			break;
 		case "normal":
-			if (tps.getAngle() >= 50) {
+			if (tps.getUnitValue() >= 50) {
 				injectFuel(FuelDosis.STAGE_1);
 			} else {
 				injectFuel(FuelDosis.STAGE_1 + 0.4f);
 			}
 			break;
 		case "high":
-			if (tps.getAngle() >= 50) {
+			if (tps.getUnitValue() >= 50) {
 				injectFuel(FuelDosis.STAGE_2);
 			} else {
 				injectFuel(FuelDosis.STAGE_3);
@@ -52,9 +52,9 @@ public class InjectionCoprocessor extends EcuProcessor {
 			i++;
 		}
 		
-		float coolantTemp = ect.getTemperature();
-		if(fuelDosis >= FuelDosis.STAGE_O && fuelDosis <= FuelDosis.STAGE_1) ect.setTemperature(coolantTemp + 50.2f);
-		if(fuelDosis >= FuelDosis.STAGE_2 && fuelDosis <= FuelDosis.STAGE_3) ect.setTemperature(coolantTemp + 55.6f);
+		float coolantTemp = ect.getUnitValue();
+		if(fuelDosis >= FuelDosis.STAGE_O && fuelDosis <= FuelDosis.STAGE_1) ect.setUnitValue(coolantTemp + 50.2f);
+		if(fuelDosis >= FuelDosis.STAGE_2 && fuelDosis <= FuelDosis.STAGE_3) ect.setUnitValue(coolantTemp + 55.6f);
 	}
 	
 	public String getInjectorState() {

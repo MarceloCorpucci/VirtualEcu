@@ -21,7 +21,7 @@ public class TestCalculationCoprocessor {
 	
 	@Test
 	public void testShowRPM() {
-		ckp.setVoltage();
+		ckp.setUnitValue();
 		calculationCoprocessor.setCkp(ckp);
 		int rpms = calculationCoprocessor.showRpm();
 		assertThat(rpms, is(equalTo(756)));

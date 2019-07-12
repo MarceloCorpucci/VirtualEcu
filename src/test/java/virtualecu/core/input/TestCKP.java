@@ -22,6 +22,6 @@ public class TestCKP {
 
 	@Test
 	public void containsAngleProperty() {
-        assertThat(ckp, hasProperty("voltage"));	
+        assertThat(ckp, hasProperty("unitValue"));	
 	}
 }

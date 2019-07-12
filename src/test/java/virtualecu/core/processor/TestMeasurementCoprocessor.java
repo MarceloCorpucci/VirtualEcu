@@ -27,7 +27,7 @@ public class TestMeasurementCoprocessor {
 
 	@Test
 	public void testCheckCoolantTemperatureMinThreshold() {
-		ect.setTemperature(20.3f);
+		ect.setUnitValue(20.3f);
 		measurementCoprocessor.setEct(ect);
 		String message = measurementCoprocessor.checkCoolantTemperature();
 		
@@ -36,7 +36,7 @@ public class TestMeasurementCoprocessor {
 
 	@Test
 	public void testCheckCoolantTemperatureMaxThreshold() {
-		ect.setTemperature(70.3f);
+		ect.setUnitValue(70.3f);
 		measurementCoprocessor.setEct(ect);
 		String message = measurementCoprocessor.checkCoolantTemperature();
 		
@@ -45,8 +45,8 @@ public class TestMeasurementCoprocessor {
 	
 	@Test
 	public void testMeasureAirDensityLow() {
-		map.setHg(2.7f);
-		bs.setHg(2.1f);
+		map.setUnitValue(2.7f);
+		bs.setUnitValue(2.1f);
 		
 		String currentAirDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		
@@ -55,8 +55,8 @@ public class TestMeasurementCoprocessor {
 	
 	@Test
 	public void testMeasureAirDensityNormal() {
-		map.setHg(5.1f);
-		bs.setHg(3.1f);
+		map.setUnitValue(5.1f);
+		bs.setUnitValue(3.1f);
 		
 		String currentAirDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		
@@ -65,8 +65,8 @@ public class TestMeasurementCoprocessor {
 	
 	@Test
 	public void testMeasureAirDensityHigh() {
-		map.setHg(7.7f);
-		bs.setHg(3.8f);
+		map.setUnitValue(7.7f);
+		bs.setUnitValue(3.8f);
 		
 		String currentAirDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		
@@ -75,8 +75,8 @@ public class TestMeasurementCoprocessor {
 	
 	@Test
 	public void testMeasureAirDensityFailed() {
-		map.setHg(7.7f);
-		bs.setHg(1.8f);
+		map.setUnitValue(7.7f);
+		bs.setUnitValue(1.8f);
 		
 		String currentAirDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		

@@ -4,7 +4,7 @@ public class CalculationCoprocessor extends EcuProcessor {
 	
 	public int showRpm() {
 		int[] range = ckp.getInterrupterRingSpecs();
-		float multiplier = ckp.getVoltage();
+		float multiplier = ckp.getUnitValue();
 		for(float volt : range) {
 			if (volt == 1) {
 				multiplier *= 2.02;

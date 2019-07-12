@@ -22,6 +22,6 @@ public class TestTPS {
 
 	@Test
 	public void containsAngleProperty() {
-        assertThat(tps, hasProperty("angle"));	
+        assertThat(tps, hasProperty("unitValue"));	
 	}
 }

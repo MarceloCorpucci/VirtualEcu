@@ -1,22 +1,8 @@
 package virtualecu.core.input;
 
-public class MAP {
-	private String name;
-	private float hg;
-	
+public class MAP extends InputSensor {
 	public MAP() {
-		this.name = "Manifold Absolute Pressure Sensor";
-	}
-
-	public String getName() {
-		return name;
-	}
-	
-	public float getHg() {
-		return hg;
-	}
-
-	public void setHg(float hg) {
-		this.hg = hg;
+		this.setName("Manifold Absolute Pressure Sensor");
+		this.setMeasurementUnit("Hg");
 	}
 }

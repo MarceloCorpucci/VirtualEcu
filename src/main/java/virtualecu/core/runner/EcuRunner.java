@@ -43,27 +43,27 @@ public class EcuRunner {
 		injectionCoprocessor.setInjector(injector);
 		injectionCoprocessor.setIgnitionModule(ignitionModule);
 		
-		ckp.setVoltage();
+		ckp.setUnitValue();
 		calculationCoprocessor.setCkp(ckp);
-		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getVoltage() + "v " + "@ " + Integer.toString(calculationCoprocessor.showRpm()) + "rpm.");
+		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getUnitValue() + ckp.getMeasurementUnit() + " @ " + Integer.toString(calculationCoprocessor.showRpm()) + "rpm.");
 				
-		map.setHg(2.7f);
-		EcuDashboard.showMessage(map.getName() + ": " + map.getHg() + "Hg");
+		map.setUnitValue(2.7f);
+		EcuDashboard.showMessage(map.getName() + ": " + map.getUnitValue() + "Hg");
 
-		bs.setHg(2.4f);
-		EcuDashboard.showMessage(bs.getName() + ": " + bs.getHg() + "Hg");
+		bs.setUnitValue(2.4f);
+		EcuDashboard.showMessage(bs.getName() + ": " + bs.getUnitValue() + bs.getMeasurementUnit());
 		
-		ect.setTemperature(25.3f);
+		ect.setUnitValue(25.3f);
 		measurementCoprocessor.setEct(ect);
-		EcuDashboard.showMessage(ect.getName() + ": " + ect.getTemperature() + "º");
+		EcuDashboard.showMessage(ect.getName() + ": " + ect.getUnitValue() + "º");
 
-		tps.setAngle(40);
+		tps.setUnitValue(40);
 		injectionCoprocessor.setCkp(ckp);
 		injectionCoprocessor.setEct(ect);
 		String airDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		EcuDashboard.showMessage("Air Density Level: " + airDensity);
 		injectionCoprocessor.dosifyFuel(tps, airDensity);
-		EcuDashboard.showMessage(tps.getName() + ": " + tps.getAngle() + "º");
+		EcuDashboard.showMessage(tps.getName() + ": " + tps.getUnitValue() + "º");
 		EcuDashboard.showMessage(injectionCoprocessor.getInjectorState());
 		EcuDashboard.showMessage(injectionCoprocessor.getIgnitionState());
 		EcuDashboard.showMessage(measurementCoprocessor.checkCoolantTemperature());

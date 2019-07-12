@@ -22,6 +22,6 @@ public class TestMAP {
 
 	@Test
 	public void containsCelsiusProperty() {
-        assertThat(map, hasProperty("hg"));	
+        assertThat(map, hasProperty("unitValue"));	
 	}
 }
