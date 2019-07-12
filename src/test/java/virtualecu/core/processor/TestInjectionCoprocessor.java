@@ -48,9 +48,9 @@ public class TestInjectionCoprocessor {
 	
 	@Test
 	public void testDosifyFuelAtFullCapacity() {
-		tps.setUnitValue(40);
-		map.setUnitValue(6.7f);
-		bs.setUnitValue(2.4f);
+//		tps.<modify>(40);
+//		map.<modify>(6.7f);
+//		bs.<modify>(2.4f);
 		
 		String airDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		injectionCoprocessor.dosifyFuel(tps, airDensity);
@@ -60,9 +60,9 @@ public class TestInjectionCoprocessor {
 	
 	@Test
 	public void testDosifyFuelAtNormalCapacity() {
-		tps.setUnitValue(60);
-		map.setUnitValue(2.7f);
-		bs.setUnitValue(2.1f);
+//		tps.<modify>(60);
+//		map.<modify>(2.7f);
+//		bs.<modify>(2.1f);
 		
 		String airDensity = measurementCoprocessor.measureAirDensity(map, bs);
 		injectionCoprocessor.dosifyFuel(tps, airDensity);

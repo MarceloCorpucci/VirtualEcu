@@ -1,8 +1,22 @@
 package virtualecu.core.input;
 
-public class TPS extends InputSensor {
+public class TPS {
+	private String name;
+	private int angle;
+	
 	public TPS() {
-		this.setName("Throttle Position Sensor");
-		this.setMeasurementUnit("º");
+		name = "Throttle Position Sensor";
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public int getAngle() {
+		return angle;
+	}
+
+	public void setAngle(int angle) {
+		this.angle = angle;
 	}
 }

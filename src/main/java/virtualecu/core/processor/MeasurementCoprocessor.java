@@ -8,10 +8,10 @@ public class MeasurementCoprocessor extends EcuProcessor {
 	
 	public String checkCoolantTemperature() {
 		String message =  "";
-		int indexFromEct = Math.round(ect.getUnitValue());
+		int indexFromEct = Math.round(ect.getTemperature());
 		int times = 0;
 		
-		if(ect.getUnitValue() < TemperatureThreshold.MIN_CELSIUS) {
+		if(ect.getTemperature() < TemperatureThreshold.MIN_CELSIUS) {
 			
 			for(int i = indexFromEct; i < TemperatureThreshold.MIN_CELSIUS; i++) {
 				times += 1;
@@ -30,7 +30,7 @@ public class MeasurementCoprocessor extends EcuProcessor {
 	}
 
 	public String measureAirDensity(MAP map, BS bs) {
-		int airDensityDiff = Math.round(map.getUnitValue() - bs.getUnitValue());
+		int airDensityDiff = Math.round(map.getHg() - bs.getHg());
 		String airDensity = "not determined";
 		
 		switch (airDensityDiff) {
