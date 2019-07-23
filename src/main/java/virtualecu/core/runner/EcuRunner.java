@@ -1,76 +1,22 @@
 package virtualecu.core.runner;
 
-import virtualecu.core.display.EcuDashboard;
-import virtualecu.core.input.BS;
-import virtualecu.core.input.CKP;
-import virtualecu.core.input.ECT;
-import virtualecu.core.input.Lambda;
-import virtualecu.core.input.MAP;
-import virtualecu.core.input.TPS;
-import virtualecu.core.output.FuelInjector;
-import virtualecu.core.output.FuelPump;
-import virtualecu.core.output.IgnitionControlModule;
-import virtualecu.core.processor.CalculationCoprocessor;
-import virtualecu.core.processor.InjectionCoprocessor;
-import virtualecu.core.processor.MeasurementCoprocessor;
+import virtualecu.core.interfaces.Pluggable;
+import virtualecu.core.interfaces.USBConnector;
 
 public class EcuRunner {
-	public static void main (String[] args) {
-		final String description = "====== Virtual ECU runner ======";
+	public static void main (String[] args) {		
+		Pluggable usbConnector = new USBConnector();
+		usbConnector.connectToInputBus();
+		usbConnector.connectToMainBus();
+		usbConnector.connectToOutputBus();
 		
-		FuelPump fuelPump = new FuelPump();
-		Lambda lambda = new Lambda();
-		boolean voltageOn = true;
-		FuelInjector injector = new FuelInjector(voltageOn);
-		IgnitionControlModule ignitionModule = new IgnitionControlModule();
-		boolean isCelsius = true;
-		CKP ckp = new CKP();
-		ECT ect = new ECT(isCelsius);
-		TPS tps = new TPS();
-		MAP map = new MAP();
-		BS bs = new BS();
-
-		InjectionCoprocessor injectionCoprocessor = new InjectionCoprocessor();
-		CalculationCoprocessor calculationCoprocessor = new CalculationCoprocessor();
-		MeasurementCoprocessor measurementCoprocessor = new MeasurementCoprocessor();
-
-		EcuDashboard.showMessage(description);
-		
-		injectionCoprocessor.setFuelPump(fuelPump);
-		injectionCoprocessor.activateFuelPump();
-		EcuDashboard.showMessage(injectionCoprocessor.getFuelPumpState());
-		
-		injectionCoprocessor.setInjector(injector);
-		injectionCoprocessor.setIgnitionModule(ignitionModule);
-		
-		ckp.setUnitValue();
-		calculationCoprocessor.setCkp(ckp);
-		EcuDashboard.showMessage(ckp.getName() + ": " + ckp.getUnitValue() + ckp.getMeasurementUnit() + " @ " + Integer.toString(calculationCoprocessor.showRpm()) + "rpm.");
-				
-		map.setUnitValue(2.7f);
-		EcuDashboard.showMessage(map.getName() + ": " + map.getUnitValue() + "Hg");
-
-		bs.setUnitValue(2.4f);
-		EcuDashboard.showMessage(bs.getName() + ": " + bs.getUnitValue() + bs.getMeasurementUnit());
-		
-		ect.setUnitValue(25.3f);
-		measurementCoprocessor.setEct(ect);
-		EcuDashboard.showMessage(ect.getName() + ": " + ect.getUnitValue() + "º");
-
-		tps.setUnitValue(40);
-		injectionCoprocessor.setCkp(ckp);
-		injectionCoprocessor.setEct(ect);
-		String airDensity = measurementCoprocessor.measureAirDensity(map, bs);
-		EcuDashboard.showMessage("Air Density Level: " + airDensity);
-		injectionCoprocessor.dosifyFuel(tps, airDensity);
-		EcuDashboard.showMessage(tps.getName() + ": " + tps.getUnitValue() + "º");
-		EcuDashboard.showMessage(injectionCoprocessor.getInjectorState());
-		EcuDashboard.showMessage(injectionCoprocessor.getIgnitionState());
-		EcuDashboard.showMessage(measurementCoprocessor.checkCoolantTemperature());
-		
-		float airFuelRatio = 11.5f;
-		lambda.measureRatio(airFuelRatio);
-		EcuDashboard.showMessage(lambda.getName() + ": is receiving " + airFuelRatio + " air/fuel ratio - " + lambda.getState());
+		usbConnector.startEcu();
+		usbConnector.getRpms();
+		usbConnector.showAirPressure();
+		usbConnector.showEngineTemp();
+		usbConnector.measureAirDensity();
+		usbConnector.accelerate();
+		usbConnector.measureAirFuelRatio();
 	}
 
 }
