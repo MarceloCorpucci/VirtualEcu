@@ -5,7 +5,7 @@ public interface Pluggable {
 	void connectToInputBus();
 	void connectToOutputBus();
 	void startEcu();
-	void getRpms();
+//	void getRpms();
 	void showAirPressure();
 	void showEngineTemp();
 	void measureAirDensity();

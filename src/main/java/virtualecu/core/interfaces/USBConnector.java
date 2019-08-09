@@ -3,7 +3,7 @@ package virtualecu.core.interfaces;
 import virtualecu.core.bus.InputBus;
 import virtualecu.core.bus.MainBus;
 import virtualecu.core.bus.OutputBus;
-import virtualecu.core.display.EcuDashboard;
+import virtualecu.core.display.TextDisplay;
 
 public class USBConnector implements Pluggable {
 	private MainBus mainBus;
@@ -30,37 +30,38 @@ public class USBConnector implements Pluggable {
 		mainBus.toInjectionCoprocessor().setIgnitionModule(outputBus.prepareIgnitionModule());
 	}
 	
-	public void getRpms() {
-		mainBus.toCalculationCoprocessor().setCkp(inputBus.manageCKP());
-		EcuDashboard.showMessage(
-						inputBus.ckpName() + ": " + 
-						inputBus.ckpValue() + 
-						inputBus.ckpMeasurementUnit() + " @ " + 
-						Integer.toString(mainBus.toCalculationCoprocessor().showRpm()) + "rpm.");
-	}
+	//DONE
+//	public void getRpms() {
+////		mainBus.toCalculationCoprocessor().setCkp(inputBus.manageCKP());
+////		EcuDashboard.showMessage(
+////						inputBus.ckpName() + ": " + 
+////						inputBus.ckpValue() + 
+////						inputBus.ckpMeasurementUnit() + " @ " + 
+////						Integer.toString(mainBus.toCalculationCoprocessor().showRpm()) + "rpm.");
+//	}
 	
 	public void showAirPressure() {
 		inputBus.manageMAP(2.7f);
 		inputBus.manageBS(2.4f);
-		
-		EcuDashboard.showMessage(
-						inputBus.mapName() + ": " +
-						inputBus.mapValue() + "Hg");
-		
-		EcuDashboard.showMessage(
-						inputBus.bsName() + ": " +
-						inputBus.bsValue() + 
-						inputBus.bsMeasurementUnit());
+//		
+//		TextDisplay.showMessage(
+//						inputBus.mapName() + ": " +
+//						inputBus.mapValue() + "Hg");
+//		
+//		TextDisplay.showMessage(
+//						inputBus.bsName() + ": " +
+//						inputBus.bsValue() + 
+//						inputBus.bsMeasurementUnit());
 		
 	}
 	
 	public void showEngineTemp() {
 		mainBus.toCalculationCoprocessor().setEct(inputBus.manageECT(25.3f));
-		
-		EcuDashboard.showMessage(
-				inputBus.ectName() + ": " +
-				inputBus.ectValue() + 
-				inputBus.ectMeasurementUnit());
+//		
+//		TextDisplay.showMessage(
+//				inputBus.ectName() + ": " +
+//				inputBus.ectValue() + 
+//				inputBus.ectMeasurementUnit());
 	}
 	
 	public void measureAirDensity(){
@@ -69,7 +70,7 @@ public class USBConnector implements Pluggable {
 		
 		String airDensity = mainBus.toMeasurementCoprocessor().measureAirDensity(inputBus.manageMAP(2.7f), inputBus.manageBS(2.4f));
 				
-		EcuDashboard.showMessage("Air Density Level: " + airDensity);
+//		TextDisplay.showMessage("Air Density Level: " + airDensity);
 
 	}
 	
@@ -79,8 +80,8 @@ public class USBConnector implements Pluggable {
 		mainBus.toInjectionCoprocessor().setEct(inputBus.manageECT(25.3f));
 		mainBus.toInjectionCoprocessor().dosifyFuel(inputBus.manageTPS(40), airDensity);
 		
-		EcuDashboard.showMessage(mainBus.toInjectionCoprocessor().getInjectorState());
-		EcuDashboard.showMessage(mainBus.toInjectionCoprocessor().getIgnitionState());
+//		TextDisplay.showMessage(mainBus.toInjectionCoprocessor().getInjectorState());
+//		TextDisplay.showMessage(mainBus.toInjectionCoprocessor().getIgnitionState());
 	}
 	
 	public void measureAirFuelRatio() {
@@ -88,6 +89,6 @@ public class USBConnector implements Pluggable {
 		inputBus.manageLambda(11.5f);
 		inputBus.manageLambda(airFuelRatio);
 		
-		EcuDashboard.showMessage(inputBus.lambdaName() + ": is receiving " + airFuelRatio + " air/fuel ratio - " + inputBus.lambdaState()); 
+//		TextDisplay.showMessage(inputBus.lambdaName() + ": is receiving " + airFuelRatio + " air/fuel ratio - " + inputBus.lambdaState()); 
 	}
 }
