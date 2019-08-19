@@ -5,11 +5,11 @@ public interface Pluggable {
 	void connectToInputBus();
 	void connectToOutputBus();
 	void startEcu();
-//	void getRpms();
-	void showAirPressure();
-	void showEngineTemp();
-	void measureAirDensity();
-	void accelerate();
-	void measureAirFuelRatio();
+	void informRpms();
+	void informAirPressure(float mapAirPressure, float bsAirPressure);
+	void informEngineTemp(float temp);
+	void measureAirDensity(float airTemp, float mapAirPressure, float bsAirPressure);
+//	void accelerate();
+	void measureAirFuelRatio(float airFuelRatio);
 	
 }

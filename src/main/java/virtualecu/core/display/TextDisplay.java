@@ -1,49 +1,55 @@
 package virtualecu.core.display;
 
-import virtualecu.core.interfaces.DisplayPort;
 import virtualecu.core.interfaces.Displayable;
 
 public class TextDisplay implements Displayable {
-	private DisplayPort displayPort;
-//	
-//	public void connectToDisplayPort(DisplayPort displayPort) {
-//		this.displayPort = displayPort;
-//	}
-	public TextDisplay() {
-		this.displayPort = new DisplayPort();
-	}
+	private String[] message;
+	private String simpleMessage;
 	
-	public void connectToBusses() {
-		displayPort.connectToInputBus();
-		displayPort.connectToMainBus();
-		displayPort.connectToOutputBus();
-	}
-	
-	public void showMessage(String message) {
-		System.out.println(message);
+	public Displayable receive(String[] message) {
+		this.message = message;
+		return this;
 	}
 
-	public void showRPMs() {
-//		String[] params = displayPort.composeInformationAboutRpms();
-//		System.out.println(
-//						params[0] + ": " + 
-//						params[1] + 
-//						params[2] + " @ " + 
-//						params[3] + "rpm.");
+	public Displayable receive(String message) {
+		this.simpleMessage = message;
+		return this;
+	}
+	
+	public void showSimpleMessage() {
+		System.out.println(simpleMessage);
 	}
 
-	public void standardMessage(String[] params) {
+	public void showRpms() {
 		System.out.println(
-						params[0] + ": " +
-						params[1] + 
-						params[2]);
+				message[0] + ": " + 
+				message[1] + 
+				message[2] + " @ " + 
+				message[3] + "rpm.");
+	}
+
+	public void showAirAirPressure() {
+		System.out.println(
+				message[0] + ": " + 
+				message[1] + "Hg | " +
+				message[2] + ": " +
+				message[3] + 
+				message[4]);
+	}
+	
+	public void showStandardMessage() {
+		System.out.println(
+						message[0] + ": " +
+						message[1] + 
+						message[2]);
 		
 	}
 
-	public void showAirFuelRatio(String[] params) {
+	public void showAirFuelRatio() {
 		System.out.println(
-						params[0] + ": is receiving " + 
-						params[1] + " air/fuel ratio - " + 
-						params[2]);
+						message[0] + ": is receiving " + 
+						message[1] + " " +
+						"air/fuel ratio - " + message[2]);
 	}
+
 }

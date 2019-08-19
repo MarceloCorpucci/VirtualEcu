@@ -1,8 +1,12 @@
 package virtualecu.core.interfaces;
 
 public interface Displayable {
-	void showRPMs();
-	void standardMessage(String[] params);
-	void showAirFuelRatio(String[] params);
+	Displayable receive(String[] message);
+	Displayable receive(String message);
+	void showSimpleMessage();
+	void showRpms();
+	void showAirAirPressure();
+	void showStandardMessage();
+	void showAirFuelRatio();
 
 }
