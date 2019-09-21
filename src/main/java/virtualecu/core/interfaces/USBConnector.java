@@ -42,6 +42,18 @@ public class USBConnector implements Pluggable {
 		mainBus.toDisplayPort().sendSignalToDisplayableDevice().receive(message).showRpms();
 	}
 	
+	public String[] informRpms(float tpsAngle) {
+		this.connectToInputBus();
+		this.connectToMainBus();
+		
+		mainBus.toCalculationCoprocessor().setTps(inputBus.manageTPS(tpsAngle));
+		mainBus.toCalculationCoprocessor().setCkp(inputBus.manageCKP());
+		
+		mainBus.toDisplayPort().communicateWithInputBus(inputBus);
+		mainBus.toDisplayPort().communicateWithMainBus(mainBus);
+		return mainBus.toDisplayPort().composeInfoAboutRpms();
+	}
+	
 	public void informAirPressure(float mapAirPressure, float bsAirPressure) {
 		inputBus.manageMAP(mapAirPressure);
 		inputBus.manageBS(bsAirPressure);

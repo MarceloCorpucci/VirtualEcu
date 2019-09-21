@@ -26,7 +26,7 @@ public class DisplayPort {
 	}
 	
 	public String[] composeInfoAboutRpms() {
-		mainBus.toCalculationCoprocessor().setCkp(inputBus.manageCKP());
+//		mainBus.toCalculationCoprocessor().setCkp(inputBus.manageCKP());
 		
 		String[] params = new String[4];
 		params[0] = inputBus.ckpName();

@@ -6,6 +6,7 @@ import virtualecu.core.input.ECT;
 import virtualecu.core.input.Lambda;
 import virtualecu.core.input.MAP;
 import virtualecu.core.input.TPS;
+import virtualecu.core.processor.CalculationCoprocessor;
 
 public class InputBus {
 	private BS bs;
@@ -14,6 +15,7 @@ public class InputBus {
 	private Lambda lambda;
 	private MAP map;
 	private TPS tps;
+	private CalculationCoprocessor calculationCoprocessor;
 	
 	public InputBus() {
 		bs = new BS();
@@ -22,6 +24,11 @@ public class InputBus {
 		lambda = new Lambda();
 		map = new MAP();
 		tps = new TPS();
+		calculationCoprocessor = new CalculationCoprocessor();
+	}
+	
+	public CalculationCoprocessor toCalculationCoprocessor() {
+		return calculationCoprocessor;
 	}
 	
 	public BS manageBS(float unitValue) {
